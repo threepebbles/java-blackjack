@@ -1,9 +1,5 @@
 package controller;
 
-import controller.dto.DealerMatchResultCountDto;
-import controller.dto.NameAndCardsDto;
-import controller.dto.NameAndSumsDto;
-import controller.dto.UsersMatchResultDto;
 import domain.BlackjackManager;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
@@ -19,7 +15,7 @@ public class BlackjackController {
 
     public void run() {
         BlackjackManager blackjackManager = createBlackjackManager();
-        
+
         distributeInitialCards(blackjackManager);
         addMoreCards(blackjackManager);
         printGameResult(blackjackManager);
@@ -29,8 +25,8 @@ public class BlackjackController {
         blackjackManager.distributeInitialCards();
         blackjackManager.openInitialCards();
         OutputView.printInitialCards(
-                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getDealer()),
-                NameAndCardsDto.toNameAndOpenedCards(blackjackManager.getUsers())
+                blackjackManager.getDealer(),
+                blackjackManager.getUsers()
         );
     }
 
@@ -43,13 +39,13 @@ public class BlackjackController {
     }
 
     private void printGameResult(BlackjackManager blackjackManager) {
-        OutputView.printPlayersCardsAndSum(NameAndCardsDto.toNameAndCards(blackjackManager.getDealer()),
-                NameAndCardsDto.toNameAndCards(blackjackManager.getUsers()),
-                NameAndSumsDto.from(blackjackManager.computePlayerSum()));
+        OutputView.printPlayersCardsAndSum(blackjackManager.getDealer(),
+                blackjackManager.getUsers(),
+                blackjackManager.computePlayerSum());
 
-        OutputView.printMatchResults(blackjackManager.getDealerName(),
-                DealerMatchResultCountDto.from(blackjackManager.computeDealerMatchResultCount()),
-                UsersMatchResultDto.from(blackjackManager.computeUsersMatchResult()));
+        OutputView.printMatchResults(blackjackManager.getDealer(),
+                blackjackManager.computeDealerMatchResultCount(),
+                blackjackManager.computeUsersMatchResult());
     }
 
     private BlackjackManager createBlackjackManager() {

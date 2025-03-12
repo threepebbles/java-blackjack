@@ -30,19 +30,19 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void addMoreCardsToUsers(Function<String, Boolean> wantMoreCard,
-                                    BiConsumer<String, List<Card>> callback) {
+    public void addMoreCardsToUsers(Function<Player, Boolean> wantMoreCard,
+                                    BiConsumer<Player, List<Card>> callback) {
         for (Player user : getUsers()) {
             addMorCardsToUser(user, wantMoreCard, callback);
         }
     }
 
     private void addMorCardsToUser(Player user,
-                                   Function<String, Boolean> wantMoreCard,
-                                   BiConsumer<String, List<Card>> callback) {
-        while (!user.isBust() && wantMoreCard.apply(user.getName())) {
+                                   Function<Player, Boolean> wantMoreCard,
+                                   BiConsumer<Player, List<Card>> callback) {
+        while (!user.isBust() && wantMoreCard.apply(user)) {
             user.drawOneCard(deck);
-            callback.accept(user.getName(), user.getCards());
+            callback.accept(user, user.getCards());
         }
     }
 
@@ -89,10 +89,6 @@ public class BlackjackManager {
         }
         return MatchResult.compareBySum(user.computeOptimalSum(),
                 dealer.computeOptimalSum());
-    }
-
-    public String getDealerName() {
-        return getDealer().getName();
     }
 
     public Dealer getDealer() {
