@@ -50,7 +50,9 @@ public class BlackjackController {
 
     private BlackjackManager createBlackjackManager() {
         List<String> names = InputView.inputUserName();
+        List<Integer> bets = InputView.inputBets(names);
         Users users = createUsers(names);
+        
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, users);
