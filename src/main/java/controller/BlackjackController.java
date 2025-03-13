@@ -7,6 +7,7 @@ import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -49,10 +50,7 @@ public class BlackjackController {
     }
 
     private BlackjackManager createBlackjackManager() {
-        List<String> names = InputView.inputUserName();
-        List<Integer> bets = InputView.inputBets(names);
-        Users users = createUsers(names);
-        
+        Users users = createUsers(InputView.inputUserNames());
         Dealer dealer = new Dealer();
         Deck deck = DeckGenerator.generateDeck();
         Players players = createPlayers(dealer, users);
@@ -60,12 +58,12 @@ public class BlackjackController {
     }
 
     private Users createUsers(List<String> names) {
-        return new Users(
-                names.stream()
-                        .map(String::strip)
-                        .map(User::new)
-                        .toList()
-        );
+        List<User> users = new ArrayList<>();
+        for (String name : names) {
+            int bet = InputView.inputBet(name);
+            users.add(new User(name, bet));
+        }
+        return new Users(users);
     }
 
     private Players createPlayers(Dealer dealer, Users users) {
