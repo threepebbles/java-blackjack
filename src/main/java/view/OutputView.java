@@ -32,13 +32,9 @@ public class OutputView {
     public static void printPlayersCardsAndSum(Dealer dealer,
                                                List<User> users,
                                                Map<Player, Integer> playerSum) {
-        printPlayerCardsAndSum(dealer, findNameAndSumByName(dealer, playerSum));
-        users.forEach(player -> printPlayerCardsAndSum(player, findNameAndSumByName(player, playerSum)));
+        printPlayerCardsAndSum(dealer, playerSum.get(dealer));
+        users.forEach(player -> printPlayerCardsAndSum(player, playerSum.get(player)));
         System.out.println();
-    }
-
-    private static int findNameAndSumByName(Player player, Map<Player, Integer> playerSum) {
-        return playerSum.get(player);
     }
 
     private static void printPlayerCardsAndSum(Player player, int sum) {
@@ -63,9 +59,7 @@ public class OutputView {
 
     private static String convertToDealerMatchResult(Map<MatchResult, Integer> dealerResult) {
         StringBuilder sb = new StringBuilder();
-        dealerResult.forEach((key, value) ->
-                sb.append(String.format("%d%s ", value, key.getTitle()))
-        );
+        dealerResult.forEach((key, value) -> sb.append(String.format("%d%s ", value, key.getTitle())));
         return sb.toString();
     }
 }
