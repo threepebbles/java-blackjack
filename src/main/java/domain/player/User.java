@@ -1,14 +1,14 @@
 package domain.player;
 
-import domain.Bet;
+import domain.bet.Bet;
 
 public class User extends Player {
 
-    private Bet bet;
+    private final Bet bet;
 
     public User(String name) {
         super(name);
-        this.bet = new Bet(0);
+        this.bet = Bet.defaultBet();
     }
 
     public User(String name, int bet) {
@@ -19,5 +19,9 @@ public class User extends Player {
     @Override
     public void openInitialCards() {
         openCards(2);
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }

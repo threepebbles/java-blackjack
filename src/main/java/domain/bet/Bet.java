@@ -1,10 +1,11 @@
-package domain;
+package domain.bet;
 
 import java.util.Objects;
 
 public class Bet {
 
-    public static final int MIN_BET = 1000;
+    private static final int MIN_BET = 1000;
+    private static final Bet DEFAULT_BET = new Bet(MIN_BET);
 
     private final int value;
 
@@ -13,16 +14,14 @@ public class Bet {
         this.value = value;
     }
 
+    public static Bet defaultBet() {
+        return DEFAULT_BET;
+    }
+
     private void validateRange(int value) {
         if (value < MIN_BET) {
             throw new IllegalArgumentException("최소 베팅 금액은 " + MIN_BET + "입니다.");
         }
-    }
-
-    public Bet add(Bet willBeAdded) {
-        int newValue = this.value + willBeAdded.value;
-        validateRange(newValue);
-        return new Bet(newValue);
     }
 
     @Override
@@ -39,5 +38,9 @@ public class Bet {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }
