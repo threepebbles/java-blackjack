@@ -1,7 +1,5 @@
-package domain.bet;
+package domain;
 
-import domain.BattleResult;
-import domain.Bet;
 import domain.profit.NormalProfitStrategy;
 import domain.profit.Profit;
 import org.assertj.core.api.Assertions;
