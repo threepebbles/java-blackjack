@@ -17,7 +17,7 @@ public class InputView {
     }
 
     public static boolean inputWantOneMoreCard(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니다?(예는 y, 아니오는 n)%n", player.getName());
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         YesOrNo input = YesOrNo.from(scanner.nextLine());
         return input == YesOrNo.YES;
     }
