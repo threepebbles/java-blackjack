@@ -6,18 +6,15 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
-import domain.profit.NormalProfitStrategy;
 import domain.profit.Profit;
 import domain.profit.ProfitStrategy;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlackjackManager {
+
     private final Players players;
     private final Deck deck;
 
@@ -50,51 +47,28 @@ public class BlackjackManager {
         }
     }
 
-    public void dealerHitUntilStay(Runnable callback) {
+    public void dealerHitUntilStay(Runnable onHit) {
         Dealer dealer = getDealer();
         while (dealer.canHit()) {
             dealer.drawOneCard(deck);
-            callback.run();
+            onHit.run();
         }
     }
 
     public Map<Player, Integer> computePlayerSum() {
-        Map<Player, Integer> results = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            results.put(player, player.computeOptimalSum());
-        }
-        return results;
+        return players.computePlayerSum();
     }
 
     public Map<Dealer, Profit> computeDealerProfit() {
-        var usersProfit = computeUsersProfit(NormalProfitStrategy.getInstance());
-        Profit result = new Profit(
-                usersProfit.values().stream()
-                        .mapToInt(profit -> -profit.getProfit())
-                        .sum()
-        );
-        return Map.of(getDealer(), result);
+        return players.computeDealerProfit();
     }
 
     public Map<User, Profit> computeUsersProfit(ProfitStrategy profitStrategy) {
-        Map<User, BattleResult> usersBattleResult = computeUsersBattleResult();
-        return usersBattleResult.entrySet().stream()
-                .collect(Collectors.toMap(Entry::getKey,
-                        entry -> profitStrategy.calculateProfit(entry.getKey().getBet(), entry.getValue()),
-                        (oldValue, newValue) -> newValue,
-                        LinkedHashMap::new
-                ));
+        return players.computeUsersProfit(profitStrategy);
     }
 
     public Map<User, BattleResult> computeUsersBattleResult() {
-        Dealer dealer = getDealer();
-        List<User> users = getUsers();
-
-        Map<User, BattleResult> results = new LinkedHashMap<>();
-        for (User user : users) {
-            results.put(user, BattleResult.fight(dealer, user));
-        }
-        return results;
+        return players.computeUsersBattleResult();
     }
 
     public Dealer getDealer() {
