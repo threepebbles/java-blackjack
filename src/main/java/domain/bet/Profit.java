@@ -1,7 +1,7 @@
 package domain.bet;
 
 public class Profit {
-    private int profit;
+    private final int profit;
 
     public Profit(int profit) {
         this.profit = profit;
