@@ -1,14 +1,10 @@
-package domain.bet;
+package domain;
 
 public class Profit {
     private final int profit;
 
     public Profit(int profit) {
         this.profit = profit;
-    }
-
-    public Profit(Bet bet, BattleResult battleResult) {
-        this.profit = (int) (bet.getValue() * battleResult.getWeight());
     }
 
     public Profit add(int profit) {

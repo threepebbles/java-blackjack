@@ -1,7 +1,5 @@
 package domain;
 
-import domain.bet.BattleResult;
-import domain.bet.Profit;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
@@ -114,7 +112,7 @@ public class BlackjackManagerTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<User, Profit> userProfit = blackjackManager.computeUsersProfit();
+        Map<User, Profit> userProfit = blackjackManager.computeUsersProfit(NormalProfitStrategy.getInstance());
 
         // then
         SoftAssertions.assertSoftly(softAssertions -> {

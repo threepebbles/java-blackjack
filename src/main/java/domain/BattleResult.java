@@ -1,23 +1,16 @@
-package domain.bet;
+package domain;
 
 import domain.player.Dealer;
 import domain.player.User;
 
 public enum BattleResult {
-    // TODO: CalculateProfitStrategy
-    BLACKJACK(1.5),
-    NORMAL_WIN(1),
-    LOSE(-1),
-    DRAW(0),
+
+    BLACKJACK,
+    NORMAL_WIN,
+    LOSE,
+    DRAW,
     ;
 
-    private final double weight;
-
-    BattleResult(double weight) {
-        this.weight = weight;
-    }
-
-    // TODO: 라인 수 10라인 이내로 줄이기
     public static BattleResult fight(Dealer dealer, User user) {
         if (user.isBust()) {
             return BattleResult.LOSE;
@@ -42,9 +35,5 @@ public enum BattleResult {
             return LOSE;
         }
         return DRAW;
-    }
-
-    public double getWeight() {
-        return weight;
     }
 }

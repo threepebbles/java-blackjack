@@ -1,6 +1,5 @@
 package domain;
 
-import domain.bet.BattleResult;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Rank;

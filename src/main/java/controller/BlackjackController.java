@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackjackManager;
+import domain.NormalProfitStrategy;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
 import domain.player.Dealer;
@@ -44,7 +45,10 @@ public class BlackjackController {
     }
 
     private void printProfit(BlackjackManager blackjackManager) {
-        OutputView.printProfit(blackjackManager.computeDealerProfit(), blackjackManager.computeUsersProfit());
+        OutputView.printProfit(
+                blackjackManager.computeDealerProfit(),
+                blackjackManager.computeUsersProfit(NormalProfitStrategy.getInstance())
+        );
     }
 
     private BlackjackManager createBlackjackManager() {

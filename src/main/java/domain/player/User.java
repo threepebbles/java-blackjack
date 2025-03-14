@@ -1,11 +1,11 @@
 package domain.player;
 
-import domain.bet.Bet;
+import domain.Bet;
 
 public class User extends Player {
 
     private static final int USER_INITIAL_OPEN_CARD_COUNT = 2;
-    
+
     private final Bet bet;
 
     public User(String name) {

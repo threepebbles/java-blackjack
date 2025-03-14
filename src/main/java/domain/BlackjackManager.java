@@ -1,7 +1,5 @@
 package domain;
 
-import domain.bet.BattleResult;
-import domain.bet.Profit;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.player.Dealer;
@@ -66,18 +64,18 @@ public class BlackjackManager {
     }
 
     public Map<Dealer, Profit> computeDealerProfit() {
-        var usersProfit = computeUsersProfit();
+        var usersProfit = computeUsersProfit(NormalProfitStrategy.getInstance());
         Profit result = new Profit(usersProfit.values().stream()
                 .mapToInt(profit -> -profit.getProfit())
                 .sum());
         return Map.of(getDealer(), result);
     }
 
-    public Map<User, Profit> computeUsersProfit() {
+    public Map<User, Profit> computeUsersProfit(ProfitStrategy profitStrategy) {
         Map<User, BattleResult> usersBattleResult = computeUsersBattleResult();
         return usersBattleResult.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        entry -> new Profit(entry.getKey().getBet(), entry.getValue()),
+                        entry -> profitStrategy.calculateProfit(entry.getKey().getBet(), entry.getValue()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));

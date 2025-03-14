@@ -1,6 +1,6 @@
 package view;
 
-import domain.bet.Profit;
+import domain.Profit;
 import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
