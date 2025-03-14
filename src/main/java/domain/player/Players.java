@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Players {
 
+    private static final int DEALER_SIZE = 1;
+
     private final Dealer dealer;
     private final Users users;
 
@@ -13,10 +15,6 @@ public class Players {
     public Players(Dealer dealer, Users users) {
         this.dealer = dealer;
         this.users = users;
-    }
-
-    public static Players of(Dealer dealer, Users users) {
-        return new Players(dealer, users);
     }
 
     public void distributeInitialCards(Deck deck) {
@@ -34,7 +32,7 @@ public class Players {
     }
 
     public int size() {
-        return 1 + users.size();
+        return DEALER_SIZE + users.size();
     }
 
     public List<Player> getPlayers() {

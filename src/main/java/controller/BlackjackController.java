@@ -33,11 +33,8 @@ public class BlackjackController {
     }
 
     private void hitUntilAllStay(BlackjackManager blackjackManager) {
-        blackjackManager.hitUntilAllUsersStay(InputView::inputWantHit, OutputView::printPlayerCards);
-
-        if (blackjackManager.dealerHitIfLowSum()) {
-            OutputView.printDealerHitMessageIfLowSum();
-        }
+        blackjackManager.allUsersHitUntilStay(InputView::inputWantHit, OutputView::printPlayerCards);
+        blackjackManager.dealerHitUntilStay(OutputView::printDealerHitMessage);
     }
 
     private void printCardsAndSum(BlackjackManager blackjackManager) {
@@ -60,6 +57,7 @@ public class BlackjackController {
 
     private Users createUsers(List<String> names) {
         List<User> users = new ArrayList<>();
+        // 팩터리 패턴 사용할 때 Map<name, bet> 사용
         for (String name : names) {
             int bet = InputView.inputBet(name);
             users.add(new User(name, bet));

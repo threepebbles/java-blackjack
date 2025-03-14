@@ -40,45 +40,6 @@ public class BlackjackManagerTest {
     }
 
     @Test
-    void 딜러의_카드_합이_16이하면_카드를_한장_추가한다() {
-        // given
-        Dealer dealer = new Dealer();
-        Users users = new Users(List.of(
-                new User("시소"),
-                new User("헤일러"),
-                new User("부기"),
-                new User("사나")
-        ));
-        Players players = new Players(
-                dealer, users
-        );
-
-        Deck deck = new Deck(new ArrayList<>(List.of(
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.EIGHT)
-        )));
-        BlackjackManager blackjackManager = new BlackjackManager(players, deck);
-        blackjackManager.distributeInitialCards();
-        final int beforeSize = dealer.getCards().size();
-
-        // when
-        blackjackManager.dealerHitIfLowSum();
-        final int afterSize = dealer.getCards().size();
-
-        // then
-        Assertions.assertThat(afterSize).isEqualTo(beforeSize + 1);
-    }
-
-    @Test
     void 참여자들의_승부_결과를_반환한다() {
         // given
         Dealer dealer = new Dealer();

@@ -33,24 +33,28 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void hitUntilAllUsersStay(Function<User, Boolean> wantHit,
+    public void allUsersHitUntilStay(Function<User, Boolean> wantHit,
                                      BiConsumer<User, List<Card>> callback) {
         for (User user : getUsers()) {
-            hitUntilStay(user, wantHit, callback);
+            userHitUntilStay(user, wantHit, callback);
         }
     }
 
-    private void hitUntilStay(User user,
-                              Function<User, Boolean> wantHit,
-                              BiConsumer<User, List<Card>> callback) {
+    private void userHitUntilStay(User user,
+                                  Function<User, Boolean> wantHit,
+                                  BiConsumer<User, List<Card>> callback) {
         while (!user.isBust() && wantHit.apply(user)) {
             user.drawOneCard(deck);
             callback.accept(user, user.getCards());
         }
     }
 
-    public boolean dealerHitIfLowSum() {
-        return getDealer().drawOneCardIfLowScore(deck);
+    public void dealerHitUntilStay(Runnable callback) {
+        Dealer dealer = getDealer();
+        while (dealer.canHit()) {
+            dealer.drawOneCard(deck);
+            callback.run();
+        }
     }
 
     public Map<Player, Integer> computePlayerSum() {

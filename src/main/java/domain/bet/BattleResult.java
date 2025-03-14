@@ -4,6 +4,7 @@ import domain.player.Dealer;
 import domain.player.User;
 
 public enum BattleResult {
+    // TODO: CalculateProfitStrategy
     BLACKJACK(1.5),
     NORMAL_WIN(1),
     LOSE(-1),

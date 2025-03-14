@@ -4,6 +4,8 @@ import domain.bet.Bet;
 
 public class User extends Player {
 
+    private static final int USER_INITIAL_OPEN_CARD_COUNT = 2;
+    
     private final Bet bet;
 
     public User(String name) {
@@ -18,7 +20,7 @@ public class User extends Player {
 
     @Override
     public void openInitialCards() {
-        openCards(2);
+        openCards(USER_INITIAL_OPEN_CARD_COUNT);
     }
 
     public Bet getBet() {
