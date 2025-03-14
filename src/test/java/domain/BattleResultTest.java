@@ -33,7 +33,7 @@ class BattleResultTest {
 
         // then
         Assertions.assertThat(result)
-                .isEqualTo(BattleResult.WIN);
+                .isEqualTo(BattleResult.NORMAL_WIN);
     }
 
     @Test

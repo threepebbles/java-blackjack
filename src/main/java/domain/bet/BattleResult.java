@@ -5,7 +5,7 @@ import domain.player.User;
 
 public enum BattleResult {
     BLACKJACK(1.5),
-    WIN(1),
+    NORMAL_WIN(1),
     LOSE(-1),
     DRAW(0),
     ;
@@ -16,12 +16,13 @@ public enum BattleResult {
         this.weight = weight;
     }
 
+    // TODO: 라인 수 10라인 이내로 줄이기
     public static BattleResult fight(Dealer dealer, User user) {
         if (user.isBust()) {
             return BattleResult.LOSE;
         }
         if (dealer.isBust()) {
-            return BattleResult.WIN;
+            return BattleResult.NORMAL_WIN;
         }
         if (user.isBlackjack() && dealer.isBlackjack()) {
             return BattleResult.DRAW;
@@ -34,7 +35,7 @@ public enum BattleResult {
 
     private static BattleResult compareBySum(int sum1, int sum2) {
         if (sum1 > sum2) {
-            return WIN;
+            return NORMAL_WIN;
         }
         if (sum1 < sum2) {
             return LOSE;

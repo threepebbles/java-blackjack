@@ -112,7 +112,7 @@ public class BlackjackManagerTest {
 
         // then
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(usersMatchResult.get(siso)).isEqualTo(BattleResult.WIN);
+            softAssertions.assertThat(usersMatchResult.get(siso)).isEqualTo(BattleResult.NORMAL_WIN);
             softAssertions.assertThat(usersMatchResult.get(heiler)).isEqualTo(BattleResult.LOSE);
             softAssertions.assertThat(usersMatchResult.get(boogie)).isEqualTo(BattleResult.LOSE);
             softAssertions.assertThat(usersMatchResult.get(sana)).isEqualTo(BattleResult.DRAW);
