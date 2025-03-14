@@ -33,7 +33,7 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void hitUntilAllUsersStay(Function<Player, Boolean> wantHit,
+    public void hitUntilAllUsersStay(Function<User, Boolean> wantHit,
                                      BiConsumer<User, List<Card>> callback) {
         for (User user : getUsers()) {
             hitUntilStay(user, wantHit, callback);
@@ -41,7 +41,7 @@ public class BlackjackManager {
     }
 
     private void hitUntilStay(User user,
-                              Function<Player, Boolean> wantHit,
+                              Function<User, Boolean> wantHit,
                               BiConsumer<User, List<Card>> callback) {
         while (!user.isBust() && wantHit.apply(user)) {
             user.drawOneCard(deck);

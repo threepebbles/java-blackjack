@@ -1,6 +1,6 @@
 package view;
 
-import domain.player.Player;
+import domain.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -16,10 +16,10 @@ public class InputView {
                 .toList();
     }
 
-    public static boolean inputWantHit(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
-        YesOrNo input = YesOrNo.from(scanner.nextLine());
-        return input == YesOrNo.YES;
+    public static boolean inputWantHit(User user) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", user.getName());
+        Decision input = Decision.from(scanner.nextLine());
+        return input == Decision.HIT;
     }
 
     public static int inputBet(String name) {
