@@ -1,17 +1,20 @@
 package domain;
 
+import domain.bet.BattleResult;
+import domain.bet.Profit;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
-import domain.stats.MatchResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BlackjackManager {
     private final Players players;
@@ -31,15 +34,15 @@ public class BlackjackManager {
     }
 
     public void addMoreCardsToUsers(Function<Player, Boolean> wantMoreCard,
-                                    BiConsumer<Player, List<Card>> callback) {
-        for (Player user : getUsers()) {
+                                    BiConsumer<User, List<Card>> callback) {
+        for (User user : getUsers()) {
             addMorCardsToUser(user, wantMoreCard, callback);
         }
     }
 
-    private void addMorCardsToUser(Player user,
+    private void addMorCardsToUser(User user,
                                    Function<Player, Boolean> wantMoreCard,
-                                   BiConsumer<Player, List<Card>> callback) {
+                                   BiConsumer<User, List<Card>> callback) {
         while (!user.isBust() && wantMoreCard.apply(user)) {
             user.drawOneCard(deck);
             callback.accept(user, user.getCards());
@@ -58,37 +61,33 @@ public class BlackjackManager {
         return results;
     }
 
-    public Map<MatchResult, Integer> computeDealerMatchResultCount() {
-        Map<Player, MatchResult> userNameAndMatchResult = computeUsersMatchResult();
-        Map<MatchResult, Integer> matchResultCount = new LinkedHashMap<>();
-        MatchResult.sortedValues().forEach(matchResult -> matchResultCount.put(matchResult, 0));
-
-        userNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
-                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
-        return matchResultCount;
+    public Map<Dealer, Profit> computeDealerProfit() {
+        var usersProfit = computeUsersProfit();
+        Profit result = new Profit(usersProfit.values().stream()
+                .mapToInt(Profit::getProfit)
+                .sum());
+        return Map.of(getDealer(), result);
     }
 
-    public Map<Player, MatchResult> computeUsersMatchResult() {
+    public Map<User, Profit> computeUsersProfit() {
+        Map<User, BattleResult> usersMatchResult = computeUsersMatchResult();
+        return usersMatchResult.entrySet().stream()
+                .collect(Collectors.toMap(Entry::getKey,
+                        entry -> new Profit(entry.getKey().getBet(), entry.getValue()),
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public Map<User, BattleResult> computeUsersMatchResult() {
         Dealer dealer = getDealer();
         List<User> users = getUsers();
 
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player user : users) {
-            MatchResult matchResult = computeUserMatchResult(dealer, user);
-            results.put(user, matchResult);
+        Map<User, BattleResult> results = new LinkedHashMap<>();
+        for (User user : users) {
+            results.put(user, BattleResult.fight(dealer, user));
         }
         return results;
-    }
-
-    private MatchResult computeUserMatchResult(Dealer dealer, Player user) {
-        if (user.isBust()) {
-            return MatchResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return MatchResult.WIN;
-        }
-        return MatchResult.compareBySum(user.computeOptimalSum(),
-                dealer.computeOptimalSum());
     }
 
     public Dealer getDealer() {

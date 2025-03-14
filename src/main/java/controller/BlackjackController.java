@@ -19,7 +19,8 @@ public class BlackjackController {
 
         distributeInitialCards(blackjackManager);
         addMoreCards(blackjackManager);
-        printGameResult(blackjackManager);
+        printCardsAndSum(blackjackManager);
+        printProfit(blackjackManager);
     }
 
     private void distributeInitialCards(BlackjackManager blackjackManager) {
@@ -39,14 +40,14 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(BlackjackManager blackjackManager) {
-        OutputView.printPlayersCardsAndSum(blackjackManager.getDealer(),
+    private void printCardsAndSum(BlackjackManager blackjackManager) {
+        OutputView.printCardsAndSum(blackjackManager.getDealer(),
                 blackjackManager.getUsers(),
                 blackjackManager.computePlayerSum());
+    }
 
-        OutputView.printMatchResults(blackjackManager.getDealer(),
-                blackjackManager.computeDealerMatchResultCount(),
-                blackjackManager.computeUsersMatchResult());
+    private void printProfit(BlackjackManager blackjackManager) {
+        OutputView.printProfit(blackjackManager.computeDealerProfit(), blackjackManager.computeUsersProfit());
     }
 
     private BlackjackManager createBlackjackManager() {
