@@ -48,6 +48,10 @@ public abstract class Player {
         return cards.isBust();
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public List<Card> getOpenedCards() {
         return cards.getOpenedCards();
     }

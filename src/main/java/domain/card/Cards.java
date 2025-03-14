@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cards {
     private static final int BUST_LIMIT = 21;
+    private static final int BLACKJACK_SUM = 21;
 
     private final List<Card> cards;
 
@@ -19,7 +20,7 @@ public class Cards {
     public void openCards(int count) {
         while (count > 0) {
             Card willBeOpened = findNotOpenedCard();
-            willBeOpened.openCard();
+            willBeOpened.open();
             count--;
         }
     }
@@ -39,6 +40,10 @@ public class Cards {
 
     public boolean isBust() {
         return computeOptimalSum() > BUST_LIMIT;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && computeOptimalSum() == BLACKJACK_SUM;
     }
 
     public int computeOptimalSum() {
