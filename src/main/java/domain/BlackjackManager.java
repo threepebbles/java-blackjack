@@ -33,10 +33,10 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void hitUntilAllUsersStay(Function<Player, Boolean> wantMoreCard,
+    public void hitUntilAllUsersStay(Function<Player, Boolean> wantHit,
                                      BiConsumer<User, List<Card>> callback) {
         for (User user : getUsers()) {
-            hitUntilStay(user, wantMoreCard, callback);
+            hitUntilStay(user, wantHit, callback);
         }
     }
 
@@ -49,7 +49,7 @@ public class BlackjackManager {
         }
     }
 
-    public boolean addCardToDealerIfLowSum() {
+    public boolean dealerHitIfLowSum() {
         return getDealer().drawOneCardIfLowScore(deck);
     }
 
@@ -70,8 +70,8 @@ public class BlackjackManager {
     }
 
     public Map<User, Profit> computeUsersProfit() {
-        Map<User, BattleResult> usersMatchResult = computeUsersMatchResult();
-        return usersMatchResult.entrySet().stream()
+        Map<User, BattleResult> usersBattleResult = computeUsersBattleResult();
+        return usersBattleResult.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         entry -> new Profit(entry.getKey().getBet(), entry.getValue()),
                         (oldValue, newValue) -> newValue,
@@ -79,7 +79,7 @@ public class BlackjackManager {
                 ));
     }
 
-    public Map<User, BattleResult> computeUsersMatchResult() {
+    public Map<User, BattleResult> computeUsersBattleResult() {
         Dealer dealer = getDealer();
         List<User> users = getUsers();
 

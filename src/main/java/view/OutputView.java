@@ -47,7 +47,7 @@ public class OutputView {
                 sum);
     }
 
-    public static void printDealerHitIfLowSum() {
+    public static void printDealerHitMessageIfLowSum() {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 

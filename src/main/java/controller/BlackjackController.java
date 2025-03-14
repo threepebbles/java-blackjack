@@ -33,10 +33,10 @@ public class BlackjackController {
     }
 
     private void hitUntilAllStay(BlackjackManager blackjackManager) {
-        blackjackManager.hitUntilAllUsersStay(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
+        blackjackManager.hitUntilAllUsersStay(InputView::inputWantHit, OutputView::printPlayerCards);
 
-        if (blackjackManager.addCardToDealerIfLowSum()) {
-            OutputView.printDealerHitIfLowSum();
+        if (blackjackManager.dealerHitIfLowSum()) {
+            OutputView.printDealerHitMessageIfLowSum();
         }
     }
 

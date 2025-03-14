@@ -71,7 +71,7 @@ public class BlackjackManagerTest {
         final int beforeSize = dealer.getCards().size();
 
         // when
-        blackjackManager.addCardToDealerIfLowSum();
+        blackjackManager.dealerHitIfLowSum();
         final int afterSize = dealer.getCards().size();
 
         // then
@@ -107,15 +107,15 @@ public class BlackjackManagerTest {
         blackjackManager.distributeInitialCards();
 
         // when
-        Map<User, BattleResult> usersMatchResult
-                = blackjackManager.computeUsersMatchResult();
+        Map<User, BattleResult> usersBattleResult
+                = blackjackManager.computeUsersBattleResult();
 
         // then
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(usersMatchResult.get(siso)).isEqualTo(BattleResult.NORMAL_WIN);
-            softAssertions.assertThat(usersMatchResult.get(heiler)).isEqualTo(BattleResult.LOSE);
-            softAssertions.assertThat(usersMatchResult.get(boogie)).isEqualTo(BattleResult.LOSE);
-            softAssertions.assertThat(usersMatchResult.get(sana)).isEqualTo(BattleResult.DRAW);
+            softAssertions.assertThat(usersBattleResult.get(siso)).isEqualTo(BattleResult.NORMAL_WIN);
+            softAssertions.assertThat(usersBattleResult.get(heiler)).isEqualTo(BattleResult.LOSE);
+            softAssertions.assertThat(usersBattleResult.get(boogie)).isEqualTo(BattleResult.LOSE);
+            softAssertions.assertThat(usersBattleResult.get(sana)).isEqualTo(BattleResult.DRAW);
         });
     }
 
