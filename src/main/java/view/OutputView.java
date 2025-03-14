@@ -1,10 +1,10 @@
 package view;
 
+import domain.bet.Profit;
 import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.User;
-import domain.stats.MatchResult;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +16,8 @@ public class OutputView {
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), String.join(", ", names));
 
-        printPlayerCards(dealer, dealer.getCards());
-        users.forEach(user -> printPlayerCards(user, user.getCards()));
+        printPlayerCards(dealer, dealer.getOpenedCards());
+        users.forEach(user -> printPlayerCards(user, user.getOpenedCards()));
         System.out.println();
     }
 
@@ -29,9 +29,9 @@ public class OutputView {
                         .toList()));
     }
 
-    public static void printPlayersCardsAndSum(Dealer dealer,
-                                               List<User> users,
-                                               Map<Player, Integer> playerSum) {
+    public static void printCardsAndSum(Dealer dealer,
+                                        List<User> users,
+                                        Map<Player, Integer> playerSum) {
         printPlayerCardsAndSum(dealer, playerSum.get(dealer));
         users.forEach(player -> printPlayerCardsAndSum(player, playerSum.get(player)));
         System.out.println();
@@ -51,15 +51,10 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
-    public static void printMatchResults(Dealer dealer, Map<MatchResult, Integer> dealerResult,
-                                         Map<Player, MatchResult> usersMathResult) {
-        System.out.printf("%s: %s%n", dealer.getName(), convertToDealerMatchResult(dealerResult));
-        usersMathResult.forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
-    }
+    public static void printProfit(Map<Dealer, Profit> dealerProfit, Map<User, Profit> usersProfit) {
+        Map.Entry<Dealer, Profit> dealer = dealerProfit.entrySet().iterator().next();
 
-    private static String convertToDealerMatchResult(Map<MatchResult, Integer> dealerResult) {
-        StringBuilder sb = new StringBuilder();
-        dealerResult.forEach((key, value) -> sb.append(String.format("%d%s ", value, key.getTitle())));
-        return sb.toString();
+        System.out.println(dealer.getKey().getName() + ": " + dealer.getValue().getProfit());
+        usersProfit.forEach((user, profit) -> System.out.println(user.getName() + ": " + profit.getProfit()));
     }
 }
