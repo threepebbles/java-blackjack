@@ -22,10 +22,10 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player, List<Card> cards) {
-        System.out.printf("%s카드: %s%n", player.getName(),
+        System.out.printf("%s카드: %s%n",
+                player.getName(),
                 String.join(", ", cards.stream()
-                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                card.getSuit().getTitle()))
+                        .map(OutputView::convertToCardFormat)
                         .toList()));
     }
 
@@ -38,12 +38,11 @@ public class OutputView {
     }
 
     private static void printPlayerCardsAndSum(Player player, int sum) {
-        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(),
-                String.join(", ",
-                        player.getCards().stream()
-                                .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                        card.getSuit().getTitle()))
-                                .toList()),
+        System.out.printf("%s카드: %s - 결과: %d%n",
+                player.getName(),
+                String.join(", ", player.getCards().stream()
+                        .map(OutputView::convertToCardFormat)
+                        .toList()),
                 sum);
     }
 
@@ -54,7 +53,11 @@ public class OutputView {
     public static void printProfit(Map<Dealer, Profit> dealerProfit, Map<User, Profit> usersProfit) {
         Map.Entry<Dealer, Profit> dealer = dealerProfit.entrySet().iterator().next();
 
-        System.out.println(dealer.getKey().getName() + ": " + dealer.getValue().getProfit());
-        usersProfit.forEach((user, profit) -> System.out.println(user.getName() + ": " + profit.getProfit()));
+        System.out.printf("%s: %d%n", dealer.getKey().getName(), dealer.getValue().getProfit());
+        usersProfit.forEach((user, profit) -> System.out.printf("%s: %d%n", user.getName(), profit.getProfit()));
+    }
+
+    private static String convertToCardFormat(Card card) {
+        return String.format("%s%s", card.getRank().getTitle(), card.getSuit().getTitle());
     }
 }
