@@ -36,7 +36,7 @@ public class BlackjackManager {
 
     public void allUsersHitUntilStay(Function<User, Boolean> wantHit,
                                      BiConsumer<User, List<Card>> onHit) {
-        for (User user : getUsers()) {
+        for (User user : players.getUsers()) {
             userHitUntilStay(user, wantHit, onHit);
         }
     }
@@ -68,9 +68,11 @@ public class BlackjackManager {
 
     public Map<Dealer, Profit> computeDealerProfit() {
         var usersProfit = computeUsersProfit(NormalProfitStrategy.getInstance());
-        Profit result = new Profit(usersProfit.values().stream()
-                .mapToInt(profit -> -profit.getProfit())
-                .sum());
+        Profit result = new Profit(
+                usersProfit.values().stream()
+                        .mapToInt(profit -> -profit.getProfit())
+                        .sum()
+        );
         return Map.of(getDealer(), result);
     }
 
