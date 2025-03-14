@@ -18,7 +18,7 @@ public class BlackjackController {
         BlackjackManager blackjackManager = createBlackjackManager();
 
         distributeInitialCards(blackjackManager);
-        addMoreCards(blackjackManager);
+        hitUntilAllStay(blackjackManager);
         printCardsAndSum(blackjackManager);
         printProfit(blackjackManager);
     }
@@ -32,11 +32,11 @@ public class BlackjackController {
         );
     }
 
-    private void addMoreCards(BlackjackManager blackjackManager) {
-        blackjackManager.addMoreCardsToUsers(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
+    private void hitUntilAllStay(BlackjackManager blackjackManager) {
+        blackjackManager.hitUntilAllUsersStay(InputView::inputWantOneMoreCard, OutputView::printPlayerCards);
 
         if (blackjackManager.addCardToDealerIfLowSum()) {
-            OutputView.printAddCardToDealer();
+            OutputView.printDealerHitIfLowSum();
         }
     }
 

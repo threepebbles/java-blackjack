@@ -33,17 +33,17 @@ public class BlackjackManager {
         players.openInitialCards();
     }
 
-    public void addMoreCardsToUsers(Function<Player, Boolean> wantMoreCard,
-                                    BiConsumer<User, List<Card>> callback) {
+    public void hitUntilAllUsersStay(Function<Player, Boolean> wantMoreCard,
+                                     BiConsumer<User, List<Card>> callback) {
         for (User user : getUsers()) {
-            addMorCardsToUser(user, wantMoreCard, callback);
+            hitUntilStay(user, wantMoreCard, callback);
         }
     }
 
-    private void addMorCardsToUser(User user,
-                                   Function<Player, Boolean> wantMoreCard,
-                                   BiConsumer<User, List<Card>> callback) {
-        while (!user.isBust() && wantMoreCard.apply(user)) {
+    private void hitUntilStay(User user,
+                              Function<Player, Boolean> wantHit,
+                              BiConsumer<User, List<Card>> callback) {
+        while (!user.isBust() && wantHit.apply(user)) {
             user.drawOneCard(deck);
             callback.accept(user, user.getCards());
         }
