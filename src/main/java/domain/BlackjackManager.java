@@ -35,18 +35,18 @@ public class BlackjackManager {
     }
 
     public void allUsersHitUntilStay(Function<User, Boolean> wantHit,
-                                     BiConsumer<User, List<Card>> callback) {
+                                     BiConsumer<User, List<Card>> onHit) {
         for (User user : getUsers()) {
-            userHitUntilStay(user, wantHit, callback);
+            userHitUntilStay(user, wantHit, onHit);
         }
     }
 
     private void userHitUntilStay(User user,
                                   Function<User, Boolean> wantHit,
-                                  BiConsumer<User, List<Card>> callback) {
+                                  BiConsumer<User, List<Card>> onHit) {
         while (!user.isBust() && wantHit.apply(user)) {
             user.drawOneCard(deck);
-            callback.accept(user, user.getCards());
+            onHit.accept(user, user.getCards());
         }
     }
 
