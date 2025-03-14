@@ -64,7 +64,7 @@ public class BlackjackManager {
     public Map<Dealer, Profit> computeDealerProfit() {
         var usersProfit = computeUsersProfit();
         Profit result = new Profit(usersProfit.values().stream()
-                .mapToInt(Profit::getProfit)
+                .mapToInt(profit -> -profit.getProfit())
                 .sum());
         return Map.of(getDealer(), result);
     }
