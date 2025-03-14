@@ -1,13 +1,13 @@
 package controller;
 
 import domain.BlackjackManager;
-import domain.NormalProfitStrategy;
 import domain.card.Deck;
 import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
+import domain.profit.NormalProfitStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;

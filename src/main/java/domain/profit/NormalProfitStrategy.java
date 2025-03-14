@@ -1,5 +1,7 @@
-package domain;
+package domain.profit;
 
+import domain.BattleResult;
+import domain.Bet;
 import java.util.Map;
 
 public class NormalProfitStrategy implements ProfitStrategy {

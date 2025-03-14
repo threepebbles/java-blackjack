@@ -1,4 +1,4 @@
-package domain;
+package domain.profit;
 
 public class Profit {
     private final int profit;

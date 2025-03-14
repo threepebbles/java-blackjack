@@ -2,8 +2,8 @@ package domain.bet;
 
 import domain.BattleResult;
 import domain.Bet;
-import domain.NormalProfitStrategy;
-import domain.Profit;
+import domain.profit.NormalProfitStrategy;
+import domain.profit.Profit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

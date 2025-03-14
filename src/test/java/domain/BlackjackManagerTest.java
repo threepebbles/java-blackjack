@@ -9,6 +9,8 @@ import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 import domain.player.Users;
+import domain.profit.NormalProfitStrategy;
+import domain.profit.Profit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
