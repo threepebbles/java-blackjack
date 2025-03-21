@@ -37,10 +37,6 @@ public class Hittable extends Running {
         return new Hittable(cards, this.hittableThreshold);
     }
 
-    private boolean isBustThreshold(Cards cards) {
-        return cards.computeOptimalSum() == Bust.BUST_THRESHOLD;
-    }
-
     @Override
     public State stay() {
         return new Stay(cards());
@@ -57,6 +53,10 @@ public class Hittable extends Running {
 
     private boolean isBust(Cards cards) {
         return cards.computeOptimalSum() > Bust.BUST_THRESHOLD;
+    }
+
+    private boolean isBustThreshold(Cards cards) {
+        return cards.computeOptimalSum() == Bust.BUST_THRESHOLD;
     }
 
     private boolean isOverHittableThreshold() {
